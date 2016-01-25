@@ -20,3 +20,13 @@ class Data(object):
 
 		def imprime(self):
 			print '%s/%s/%s' % (self.dia, self.mes, self.ano)
+
+class Pessoa(object):
+	def __init__(self,nome,peso,altura):
+		self.nome = nome
+		self.peso = peso
+		self.altura = altura
+
+	def imprime_imc(self):
+		imc = self.peso/ (self.altura)
+		print "Imc de %s: %s" % (self.nome, imc)
