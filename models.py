@@ -18,13 +18,25 @@ class Perfil(object):
 	def obter_curtidas(self):
 		return self.__curtidas
 
+	@classmethod
+	def gerar_perfis(classe, nome_arquivo):
+		arquivo = open(nome_arquivo, 'r')
+		perfis = [];
+		for linha in arquivo:
+			valores = linha.split(",")
+			perfis.append(classe(*valores))
+
+		arquivo.close()
+		return perfis
+
+
 class Perfil_Vip(Perfil):
 	# Função Construtora __init__ 
 	# Função Construtura sempre com __ no inicio e final
 	
 	'Classe de Usuários Vips'
 
-	def __init__(self,nome,telefone,empresa,apelido):
+	def __init__(self,nome,telefone,empresa,apelido=""):
 		# Herdando dados da classe Pai
 		super(Perfil_Vip, self).__init__(nome,telefone,empresa)
 		self.apelido = apelido
