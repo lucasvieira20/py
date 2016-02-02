@@ -4,6 +4,8 @@ class Perfil(object):
 	# Função Construtura sempre com __ no inicio e final
 	'Classe de Usuários'
 	def __init__(self,nome,telefone,empresa):
+		if(len(nome) < 3):
+			 raise ValueError('Nome deve ter pelo menos 3 caracteres')
 		self.nome = nome
 		self.telefone = telefone
 		self.empresa = empresa
@@ -18,14 +20,18 @@ class Perfil(object):
 	def obter_curtidas(self):
 		return self.__curtidas
 
-	@classmethod
-	def gerar_perfis(classe, nome_arquivo):
-		arquivo = open(nome_arquivo, 'r')
-		perfis = [];
+	@staticmethod
+	def gerar_perfis(nome_arquivo):
+		arquivo = open(nome_arquivo,'r')
+		perfis = []
 		for linha in arquivo:
-			valores = linha.split(",")
-			perfis.append(classe(*valores))
+			valores = linha.split(',')
 
+			#novo
+			if(len(valores) is not 3):
+				raise PerfilErro('Uma linha no arquivo deve ter 3 valores') #lançando PerfilError
+
+			perfis.append(Perfil(*valores))
 		arquivo.close()
 		return perfis
 
@@ -46,6 +52,13 @@ class Perfil_Vip(Perfil):
 		#Super usada para acessar a classe pai através da filha
 		return super(Perfil_Vip,self).obter_curtidas() * 10.0
 
+
+class PerfilErro(Exception):
+	def __init__(self, mensagem):
+		self.mensagem = mensagem
+
+	def __str__(self):
+		return repr(self.mensagem)
 
 class Data(object):
 	def __init__(self,dia,mes,ano):
